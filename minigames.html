@@ -381,74 +381,80 @@
     const PLAY_TOP = 10;
     const PLAY_BOTTOM = 510;
 
-    // --- SPRITE DATA (11 wide × 8 tall pixel art) ---
+    // --- SPRITE DATA ---
+    // Multi-color baby invaders: 0=transparent 1=skin 2=diaper 3=dark
+    // 11 wide × 8 tall, scale PX=3
+    const BABY_SP = {
+      squid: [ // crying baby (30 pts)
+        [ // frame 0 - arms out wide
+          [0,0,1,1,1,1,1,0,0,0,0],
+          [0,1,1,1,1,1,1,1,0,0,0],
+          [0,1,3,1,1,1,3,1,0,0,0],
+          [1,1,1,1,1,1,1,1,1,0,0],
+          [1,0,2,2,2,2,2,0,1,0,0],
+          [0,0,2,2,2,2,2,0,0,0,0],
+          [0,0,1,0,0,0,1,0,0,0,0],
+          [0,0,1,0,0,0,1,0,0,0,0],
+        ],
+        [ // frame 1 - arms at sides
+          [0,0,1,1,1,1,1,0,0,0,0],
+          [0,1,1,1,1,1,1,1,0,0,0],
+          [0,1,3,1,1,1,3,1,0,0,0],
+          [0,0,1,1,1,1,1,0,0,0,0],
+          [0,0,2,2,2,2,2,0,0,0,0],
+          [1,0,2,2,2,2,2,0,1,0,0],
+          [0,0,1,0,0,0,1,0,0,0,0],
+          [0,0,1,0,0,0,1,0,0,0,0],
+        ],
+      ],
+      spider: [ // surprised baby (20 pts)
+        [ // frame 0 - arms up
+          [0,1,1,1,1,1,1,1,0,0,0],
+          [1,1,1,1,1,1,1,1,1,0,0],
+          [1,3,1,1,1,1,1,3,1,0,0],
+          [1,1,1,1,1,1,1,1,1,0,0],
+          [0,1,2,2,2,2,2,1,0,0,0],
+          [0,0,2,2,2,2,2,0,0,0,0],
+          [0,0,1,0,0,0,1,0,0,0,0],
+          [0,0,1,0,0,0,1,0,0,0,0],
+        ],
+        [ // frame 1 - arms down
+          [0,1,1,1,1,1,1,1,0,0,0],
+          [1,1,1,1,1,1,1,1,1,0,0],
+          [1,3,1,1,1,1,1,3,1,0,0],
+          [0,1,1,1,1,1,1,1,0,0,0],
+          [0,0,2,2,2,2,2,0,0,0,0],
+          [1,1,2,2,2,2,2,1,1,0,0],
+          [0,0,1,0,0,0,1,0,0,0,0],
+          [0,0,1,0,0,0,1,0,0,0,0],
+        ],
+      ],
+      crab: [ // happy baby (10 pts)
+        [ // frame 0 - arms out
+          [0,0,1,1,1,1,1,0,0,0,0],
+          [0,1,1,1,1,1,1,1,0,0,0],
+          [0,1,3,1,1,1,3,1,0,0,0],
+          [1,1,0,1,1,1,0,1,1,0,0],
+          [1,0,1,2,2,2,1,0,1,0,0],
+          [0,0,1,2,2,2,1,0,0,0,0],
+          [0,0,1,1,0,1,1,0,0,0,0],
+          [0,0,0,1,0,1,0,0,0,0,0],
+        ],
+        [ // frame 1 - arms down
+          [0,0,1,1,1,1,1,0,0,0,0],
+          [0,1,1,1,1,1,1,1,0,0,0],
+          [0,1,3,1,1,1,3,1,0,0,0],
+          [0,0,1,1,1,1,1,0,0,0,0],
+          [0,0,1,2,2,2,1,0,0,0,0],
+          [1,0,1,2,2,2,1,0,1,0,0],
+          [0,0,1,1,0,1,1,0,0,0,0],
+          [0,0,0,1,0,1,0,0,0,0,0],
+        ],
+      ],
+    };
+
+    // Explosion sprite (single-colour, reused from original)
     const SP = {
-      crab: [
-        [ // frame 0
-          [0,0,1,0,0,0,0,0,1,0,0],
-          [0,0,0,1,0,0,0,1,0,0,0],
-          [0,0,1,1,1,1,1,1,1,0,0],
-          [0,1,1,0,1,1,1,0,1,1,0],
-          [1,1,1,1,1,1,1,1,1,1,1],
-          [1,0,1,1,1,1,1,1,1,0,1],
-          [1,0,1,0,0,0,0,0,1,0,1],
-          [0,0,0,1,1,0,1,1,0,0,0],
-        ],
-        [ // frame 1
-          [0,0,1,0,0,0,0,0,1,0,0],
-          [1,0,0,1,0,0,0,1,0,0,1],
-          [1,0,1,1,1,1,1,1,1,0,1],
-          [1,1,1,0,1,1,1,0,1,1,1],
-          [1,1,1,1,1,1,1,1,1,1,1],
-          [0,1,1,1,1,1,1,1,1,1,0],
-          [0,0,1,0,0,0,0,0,1,0,0],
-          [0,1,0,0,0,0,0,0,0,1,0],
-        ],
-      ],
-      spider: [
-        [ // frame 0
-          [0,0,0,0,1,0,1,0,0,0,0],
-          [0,0,0,1,0,1,0,1,0,0,0],
-          [0,0,1,1,1,1,1,1,1,0,0],
-          [0,1,1,0,1,1,1,0,1,1,0],
-          [1,1,1,1,1,1,1,1,1,1,1],
-          [0,1,0,1,1,0,1,1,0,1,0],
-          [0,0,0,1,0,0,0,1,0,0,0],
-          [0,0,1,0,0,0,0,0,1,0,0],
-        ],
-        [ // frame 1
-          [0,0,0,0,1,0,1,0,0,0,0],
-          [1,0,0,1,0,1,0,1,0,0,1],
-          [1,0,1,1,1,1,1,1,1,0,1],
-          [0,1,1,0,1,1,1,0,1,1,0],
-          [0,1,1,1,1,1,1,1,1,1,0],
-          [0,0,0,1,1,0,1,1,0,0,0],
-          [0,0,1,0,0,0,0,0,1,0,0],
-          [0,1,0,0,0,0,0,0,0,1,0],
-        ],
-      ],
-      squid: [
-        [ // frame 0
-          [0,0,0,1,1,1,1,0,0,0,0],
-          [0,1,1,1,1,1,1,1,1,0,0],
-          [1,1,1,1,1,1,1,1,1,1,0],
-          [1,1,0,1,1,1,1,0,1,1,0],
-          [1,1,1,1,1,1,1,1,1,1,0],
-          [0,0,1,0,0,0,0,1,0,0,0],
-          [0,1,0,1,1,1,1,0,1,0,0],
-          [1,0,1,0,0,0,0,1,0,1,0],
-        ],
-        [ // frame 1
-          [0,0,0,1,1,1,1,0,0,0,0],
-          [0,1,1,1,1,1,1,1,1,0,0],
-          [1,1,1,1,1,1,1,1,1,1,0],
-          [1,1,0,1,1,1,1,0,1,1,0],
-          [1,1,1,1,1,1,1,1,1,1,0],
-          [0,1,0,0,0,0,0,0,1,0,0],
-          [1,0,0,1,1,1,1,0,0,1,0],
-          [0,0,1,0,0,0,0,1,0,0,0],
-        ],
-      ],
       explosion: [
         [0,1,0,0,1,0,0,1,0,0,1],
         [1,0,0,0,0,0,0,0,0,0,0],
@@ -461,6 +467,22 @@
       ],
     };
 
+    // Crawling baby (UFO): 14 wide × 9 tall, scale BABY_S=3
+    // Faces RIGHT by default; flip ctx when dir=-1
+    // 0=transparent 1=skin 2=diaper 3=dark
+    const CRAWLING_BABY_PX = [
+      [0,1,1,1,1,0,0,0,0,0,0,0,0,0],
+      [1,1,1,1,1,1,0,0,0,0,0,0,0,0],
+      [1,3,1,1,3,1,0,0,0,0,0,0,0,0],
+      [1,1,1,1,1,1,1,1,1,2,2,2,0,0],
+      [0,1,1,1,1,1,1,1,1,2,2,2,0,0],
+      [0,0,0,0,0,0,1,1,1,2,0,0,0,0],
+      [0,0,1,1,0,0,1,0,0,0,0,0,1,1],
+      [0,0,1,0,0,0,1,0,0,0,0,0,1,0],
+      [0,0,1,1,0,0,1,1,0,0,0,0,1,1],
+    ];
+    const BABY_S = 3;
+
     const PX = 3;           // pixel scale for sprites
     const INV_W = 11 * PX;  // 33px
     const INV_H = 8 * PX;   // 24px
@@ -472,15 +494,15 @@
 
     const ROW_TYPES   = ['squid', 'spider', 'spider', 'crab', 'crab'];
     const ROW_POINTS  = [30, 20, 20, 10, 10];
-    const ROW_COLORS  = ['#ff6e27', '#ffcc00', '#ffcc00', '#39ff14', '#39ff14'];
+    const ROW_COLORS  = ['#ffaa66', '#ffcc88', '#ffcc88', '#ffd4a0', '#ffd4a0'];
 
     const PLAYER_W = 40;
     const PLAYER_H = 20;
     const PLAYER_Y = PLAY_BOTTOM - PLAYER_H - 6;
     const PLAYER_SPEED = 5;
 
-    const UFO_W = 44;
-    const UFO_H = 20;
+    const UFO_W = 14 * BABY_S; // 42px
+    const UFO_H = 9  * BABY_S; // 27px
     const UFO_POINTS = [50, 100, 150, 200, 300];
 
     const BARRIER_SCALE = 4;
@@ -587,32 +609,59 @@
       }
     }
 
+    // Multi-colour sprite: 1=skinColor, 2=diaper white, 3=dark
+    function drawColorSprite(pixels, x, y, scale, skinColor) {
+      for (let r = 0; r < pixels.length; r++) {
+        for (let c = 0; c < pixels[r].length; c++) {
+          const v = pixels[r][c];
+          if (!v) continue;
+          ctx.fillStyle = v === 1 ? skinColor : v === 2 ? '#f0f0ee' : '#333333';
+          ctx.fillRect(x + c * scale, y + r * scale, scale, scale);
+        }
+      }
+    }
+
     function drawPlayer() {
       if (player.dead) return;
       const x = player.x, y = player.y;
-      ctx.fillStyle = '#00e5ff';
-      ctx.fillRect(x, y + 12, PLAYER_W, 8);          // base
-      ctx.fillRect(x + 8, y + 6, PLAYER_W - 16, 10); // mid
-      ctx.fillRect(x + 17, y, 6, 10);                // barrel
-      ctx.fillStyle = '#030311';
-      ctx.fillRect(x + 4, y + 14, 6, 6);             // leg gap L
-      ctx.fillRect(x + PLAYER_W - 10, y + 14, 6, 6); // leg gap R
+      // Feeding bottle — nipple at top (that's where the milk bullet fires from)
+      // Nipple / teat
+      ctx.fillStyle = '#ffb3c1';
+      ctx.fillRect(x + 17, y,     6, 4);
+      ctx.fillRect(x + 15, y + 4, 10, 3);
+      // Collar ring
+      ctx.fillStyle = '#8899cc';
+      ctx.fillRect(x + 11, y + 7, 18, 3);
+      // Bottle body
+      ctx.fillStyle = '#b8d4f8';
+      ctx.fillRect(x + 8, y + 10, 24, 8);
+      // Graduation marks
+      ctx.fillStyle = '#6688bb';
+      ctx.fillRect(x + 30, y + 11, 2, 1);
+      ctx.fillRect(x + 30, y + 14, 2, 1);
+      ctx.fillRect(x + 30, y + 17, 2, 1);
+      // Bottom cap
+      ctx.fillStyle = '#8899cc';
+      ctx.fillRect(x + 8, y + 18, 24, 2);
     }
 
-    function drawUFO(u) {
-      ctx.fillStyle = '#ff2266';
-      ctx.beginPath();
-      ctx.ellipse(u.x + UFO_W / 2, u.y + 13, UFO_W / 2, 7, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.beginPath();
-      ctx.ellipse(u.x + UFO_W / 2, u.y + 8, UFO_W * 0.3, 8, 0, Math.PI, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = '#ff99bb';
-      for (let i = 0; i < 3; i++) {
-        ctx.beginPath();
-        ctx.arc(u.x + 10 + i * 12, u.y + 12, 2.5, 0, Math.PI * 2);
-        ctx.fill();
+    // Crawling baby (replaces UFO/flying saucer)
+    function drawCrawlingBaby(bx, by, dir) {
+      ctx.save();
+      if (dir === -1) {
+        ctx.translate(bx + UFO_W, by);
+        ctx.scale(-1, 1);
+        bx = 0; by = 0;
       }
+      for (let r = 0; r < CRAWLING_BABY_PX.length; r++) {
+        for (let c = 0; c < CRAWLING_BABY_PX[r].length; c++) {
+          const v = CRAWLING_BABY_PX[r][c];
+          if (!v) continue;
+          ctx.fillStyle = v === 1 ? '#ff9966' : v === 2 ? '#f0f0ee' : '#333333';
+          ctx.fillRect(bx + c * BABY_S, by + r * BABY_S, BABY_S, BABY_S);
+        }
+      }
+      ctx.restore();
     }
 
     function drawBarrier(b) {
@@ -701,7 +750,7 @@
         if (ufo && b.x >= ufo.x && b.x <= ufo.x + UFO_W && b.y >= ufo.y && b.y <= ufo.y + UFO_H) {
           const pts = UFO_POINTS[Math.floor(Math.random() * UFO_POINTS.length)];
           addScore(pts);
-          explosions.push({ x: ufo.x, y: ufo.y, w: UFO_W, pts, timer: 900, color: '#ff2266' });
+          explosions.push({ x: ufo.x, y: ufo.y, w: UFO_W, pts, timer: 900, color: '#ff9966' });
           ufo = null;
           playerBullets.splice(bi, 1);
           continue;
@@ -807,7 +856,7 @@
       lives--;
       player.dead = true;
       player.deadTimer = 1400;
-      explosions.push({ x: player.x, y: player.y, w: PLAYER_W, pts: null, timer: 1000, color: '#00e5ff' });
+      explosions.push({ x: player.x, y: player.y, w: PLAYER_W, pts: null, timer: 1000, color: '#b8d4f8' });
     }
 
     function addScore(pts) {
@@ -849,7 +898,7 @@
     }
 
     function drawScene() {
-      if (ufo) drawUFO(ufo);
+      if (ufo) drawCrawlingBaby(ufo.x, ufo.y, ufo.dir);
 
       for (const inv of invaders) {
         if (!inv.alive && !inv.exploding) continue;
@@ -857,7 +906,7 @@
         const type  = ROW_TYPES[inv.row];
         const color = ROW_COLORS[inv.row];
         if (inv.exploding) drawSprite(SP.explosion, p.x, p.y, PX, '#ffffff');
-        else               drawSprite(SP[type][inv.animFrame], p.x, p.y, PX, color);
+        else               drawColorSprite(BABY_SP[type][inv.animFrame], p.x, p.y, PX, color);
       }
 
       for (const b of barriers) drawBarrier(b);
@@ -884,7 +933,7 @@
           ctx.fillText(e.pts, e.x + e.w / 2, e.y - 4);
         }
         // Player death burst
-        if (e.color === '#00e5ff' && e.pts === null) {
+        if (e.color === '#b8d4f8' && e.pts === null) {
           const t = e.timer / 1000;
           ctx.fillStyle = `rgba(0,229,255,${t})`;
           const dist = (1 - t) * 30;
@@ -920,25 +969,19 @@
       ctx.fillText('— SCORE ADVANCE TABLE —', W / 2, 195);
 
       const tableItems = [
-        { label: 'UFO',       pts: '???', color: '#ff2266',  spriteKey: null },
-        { label: 'SQUID',     pts: '30',  color: '#ff6e27',  spriteKey: 'squid' },
-        { label: 'SPIDER',    pts: '20',  color: '#ffcc00',  spriteKey: 'spider' },
-        { label: 'CRAB',      pts: '10',  color: '#39ff14',  spriteKey: 'crab' },
+        { label: 'CRAWLER',   pts: '???', color: '#ff9966',  spriteKey: null },
+        { label: 'CRY BABY',  pts: '30',  color: '#ffaa66',  spriteKey: 'squid' },
+        { label: 'BABY',      pts: '20',  color: '#ffcc88',  spriteKey: 'spider' },
+        { label: 'BABY',      pts: '10',  color: '#ffd4a0',  spriteKey: 'crab' },
       ];
 
       let ty = 215;
       for (const item of tableItems) {
         if (item.spriteKey) {
-          drawSprite(SP[item.spriteKey][0], W/2 - 80, ty, PX, item.color);
+          drawColorSprite(BABY_SP[item.spriteKey][0], W/2 - 88, ty, PX, item.color);
         } else {
-          // Draw UFO
-          ctx.fillStyle = item.color;
-          ctx.beginPath();
-          ctx.ellipse(W/2 - 62, ty + 13, 18, 7, 0, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.beginPath();
-          ctx.ellipse(W/2 - 62, ty + 8, 11, 8, 0, Math.PI, Math.PI * 2);
-          ctx.fill();
+          // Draw crawling baby in score table
+          drawCrawlingBaby(W/2 - 96, ty, 1);
         }
         ctx.fillStyle = item.color;
         ctx.textAlign = 'left';
