@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Father's Odyssey — Where's My Personality Gone?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #f5f0e8;
+      --aged: #e8dfc8;
+      --ink: #1a1610;
+      --faded: #6b6355;
+      --rust: #c4521a;
+      --rust-light: #f0ddd0;
+      --border: #c8bda8;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: var(--cream);
+      background-image: repeating-linear-gradient(
+        0deg, transparent, transparent 27px,
+        rgba(180,160,120,0.15) 27px, rgba(180,160,120,0.15) 28px
+      );
+      color: var(--ink);
+      font-family: 'Lora', Georgia, serif;
+      min-height: 100vh;
+    }
+
+    header {
+      border-bottom: 2px solid var(--ink);
+      padding: 2rem 2rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: end;
+      gap: 1rem;
+    }
+
+    .header-left {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--faded);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .site-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .site-title .gone { font-style: italic; color: var(--rust); }
+
+    .header-right {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--faded);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-align: right;
+    }
+
+    .tagline-bar {
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--faded);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+    }
+
+    nav a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--faded);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.75rem 1.25rem;
+      border-right: 1px solid var(--border);
+      transition: background 0.15s, color 0.15s;
+    }
+
+    nav a:first-child { border-left: 1px solid var(--border); }
+    nav a:hover { background: var(--aged); color: var(--ink); }
+    nav a.active { background: var(--ink); color: var(--cream); }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-header {
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--rust);
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .page-header p {
+      font-style: italic;
+      color: var(--faded);
+      margin-top: 0.5rem;
+    }
+
+    .game-card {
+      border: 1px solid var(--border);
+      background: white;
+    }
+
+    .game-card-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .game-card-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+    }
+
+    .game-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--rust);
+    }
+
+    .game-description {
+      padding: 0.75rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      font-style: italic;
+      color: var(--faded);
+      font-size: 0.9rem;
+    }
+
+    .game-scores {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .score-cell {
+      padding: 0.75rem 1.5rem;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+
+    .score-cell:last-child { border-right: none; }
+
+    .score-label {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--faded);
+      margin-bottom: 0.2rem;
+    }
+
+    .score-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .game-wrapper {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      background: var(--ink);
+    }
+
+    .game-canvas-container {
+      width: 100%;
+      max-width: 600px;
+    }
+
+    #odysseyCanvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid #2a2520;
+      cursor: default;
+    }
+
+    .game-controls {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .control-hint {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--aged);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .control-hint kbd {
+      display: inline-block;
+      padding: 0.1rem 0.35rem;
+      background: #333;
+      border: 1px solid #555;
+      border-radius: 2px;
+      color: #eee;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+    }
+
+    footer {
+      margin-top: 3rem;
+      border-top: 2px solid var(--ink);
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--faded);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    @media (max-width: 768px) {
+      header { grid-template-columns: 1fr; text-align: center; }
+      .header-left, .header-right { display: none; }
+      nav { overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-left">
+      Est. When the kids arrived<br />
+      Volume I, Issue 1
+    </div>
+    <a href="index.html" class="site-title">
+      Where's My Personality <span class="gone">Gone?</span>
+    </a>
+    <div class="header-right">
+      A journal of recovery<br />
+      &amp; mild despair
+    </div>
+  </header>
+
+  <div class="tagline-bar">
+    <span>Missing: One Personality</span>
+    <span>·</span>
+    <span>Last Seen: Pre-Children</span>
+    <span>·</span>
+    <span>Reward Offered</span>
+  </div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="#">Posts</a>
+    <a href="#">Quizzes</a>
+    <a href="minigames.html" class="active">Minigames</a>
+    <a href="#">Missing Hobbies</a>
+    <a href="#">About</a>
+  </nav>
+
+  <main>
+    <div class="page-header">
+      <div class="section-label">Minigames · Philosophical Walking Sim</div>
+      <h1>Father's Odyssey</h1>
+      <p>He walked out the front door. He's still not sure where he's going.</p>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <h2>Father's Odyssey</h2>
+        <span class="game-tag">Walking Sim · Philosophical · Multiple Endings</span>
+      </div>
+      <div class="game-description">
+        Walk through a quiet landscape. Stop at the things that used to matter. Or don't. Either way, you'll end up somewhere.
+      </div>
+
+      <div class="game-scores">
+        <div class="score-cell">
+          <span class="score-label">Self</span>
+          <span class="score-value" id="selfDisplay">—</span>
+        </div>
+        <div class="score-cell">
+          <span class="score-label">Present</span>
+          <span class="score-value" id="presentDisplay">—</span>
+        </div>
+        <div class="score-cell">
+          <span class="score-label">Memories</span>
+          <span class="score-value" id="memoriesDisplay">0 / 5</span>
+        </div>
+      </div>
+
+      <div class="game-wrapper">
+        <div class="game-canvas-container">
+          <canvas id="odysseyCanvas" width="600" height="540"></canvas>
+        </div>
+        <div class="game-controls">
+          <span class="control-hint"><kbd>←</kbd> <kbd>→</kbd> or <kbd>A</kbd> <kbd>D</kbd> Walk</span>
+          <span class="control-hint"><kbd>Space</kbd> Engage memory</span>
+          <span class="control-hint"><kbd>Enter</kbd> Start / Continue</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>Where's My Personality Gone? · A work in (arrested) progress</p>
+    <p>No personalities were harmed in the making of this website. Several were misplaced.</p>
+  </footer>
+
+<script>
+// ================================================================
+// FATHER'S ODYSSEY
+// A philosophical walking simulation
+// ================================================================
+
+const canvas = document.getElementById('odysseyCanvas');
+const ctx    = canvas.getContext('2d');
+const W = 600, H = 540;
+
+// --- HUD refs ---
+const selfDisplay     = document.getElementById('selfDisplay');
+const presentDisplay  = document.getElementById('presentDisplay');
+const memoriesDisplay = document.getElementById('memoriesDisplay');
+
+// --- Game state ---
+let gameState = 'title'; // 'title' | 'walking' | 'vignette' | 'ending'
+let lastTime  = 0;
+
+// --- Player ---
+const PLAYER = {
+  x: 80,           // world x (shifts with scroll)
+  screenX: 150,    // fixed screen position
+  y: 0,            // computed from ground
+  walkFrame: 0,
+  walkTimer: 0,
+  walkSpeed: 1.8,  // px per ms * dt normalised
+  facing: 1,       // 1=right, -1=left
+  moving: false,
+  stopped: false,  // true when player chooses to stop at a vignette
+};
+
+// --- World ---
+let worldOffset   = 0; // how far the world has scrolled
+const WORLD_WIDTH = 4200;
+const GROUND_Y    = 410; // y of ground plane on canvas
+
+// --- Score axes ---
+let selfScore    = 0;
+let presentScore = 0;
+let memoriesEngaged = 0;
+let memoriesPassed  = 0;
+
+// --- Narrative text system ---
+const narrativeLines = [
+  { worldX: 350,  text: "He left the house at a reasonable hour,\nfor no reason in particular." },
+  { worldX: 900,  text: "The quiet was unfamiliar.\nHe'd forgotten it had a texture." },
+  { worldX: 1600, text: "Somewhere between the guitar and the bookshelf,\nhe stopped looking at his phone." },
+  { worldX: 2300, text: "He thought about who he was\nbefore the word 'Dad' rearranged everything." },
+  { worldX: 2900, text: "There is a version of you still out here.\nWaiting. Slightly embarrassed." },
+  { worldX: 3500, text: "The door was always there.\nHe just forgot which side he was on." },
+];
+let activeNarrative = null; // { text, alpha, phase } 'fadein'|'hold'|'fadeout'
+let narrativeFired  = new Set();
+
+// --- Vignettes ---
+// worldX: position in world coords
+// axis: 'self' | 'present' | 'neutral'
+// engaged: has player stopped here
+const VIGNETTES = [
+  {
+    id: 0, worldX: 650,  label: 'Guitar',               axis: 'self',
+    prompt: "Your old guitar. Still in tune, probably.",
+    engaged: false, passed: false,
+  },
+  {
+    id: 1, worldX: 1200, label: 'Bookshelf',             axis: 'self',
+    prompt: "A stack of books you were going to finish.",
+    engaged: false, passed: false,
+  },
+  {
+    id: 2, worldX: 1900, label: 'Running Shoes',         axis: 'self',
+    prompt: "Running shoes. The ambition of past-you.",
+    engaged: false, passed: false,
+  },
+  {
+    id: 3, worldX: 2600, label: 'The Pub',               axis: 'neutral',
+    prompt: "A warm door. You used to know everyone inside.",
+    engaged: false, passed: false,
+  },
+  {
+    id: 4, worldX: 3300, label: "Child's Room",          axis: 'present',
+    prompt: "The door is slightly open. Familiar light.",
+    engaged: false, passed: false,
+  },
+];
+
+// How close (px screen distance) before vignette glows
+const ENGAGE_DIST = 70;
+const PASS_DIST   = 180; // beyond this = 'passed without engaging'
+
+// --- Parallax layers ---
+// Each layer: scroll multiplier (0 = static, 1 = full world speed)
+const LAYER_FAR  = 0.18;
+const LAYER_MID  = 0.48;
+const LAYER_NEAR = 0.82;
+
+// --- Sky gradient lerp targets ---
+// Based on selfScore and presentScore, sky colour shifts
+// Neutral: deep midnight blue-grey
+// High self: warm amber dusk
+// High present: soft warm ochre
+// Low both: cold night blue
+
+// --- Ending data ---
+const ENDINGS = {
+  stillBecoming: {
+    title: "Still Becoming",
+    lines: [
+      "You found pieces of yourself scattered\nalong the road you'd forgotten you'd built.",
+      "The children noticed you were lighter.\nThey didn't know why. Neither did you.",
+      "That's fine.\nBecoming doesn't require understanding first.",
+    ],
+    palette: { sky1: '#ffd580', sky2: '#ff9a3c', ground: '#2a1a08', mid: '#4a2a10' },
+    icon: 'sunrise',
+  },
+  longWayRound: {
+    title: "The Long Way Round",
+    lines: [
+      "You found yourself.\nJust not where you left them.",
+      "There's no map for this part.\nThere rarely is.",
+      "You're still walking.\nThat's something.",
+    ],
+    palette: { sky1: '#c8a060', sky2: '#8b5e2a', ground: '#1a1008', mid: '#3a2010' },
+    icon: 'alone',
+  },
+  ghostFather: {
+    title: "The Ghost Father",
+    lines: [
+      "You gave everything.\nEven yourself.",
+      "The door stays open.\nYou stand at the threshold.",
+      "Love that costs the self\nis a debt with no creditor.",
+    ],
+    palette: { sky1: '#9090b0', sky2: '#404060', ground: '#0a0a14', mid: '#1a1a2a' },
+    icon: 'door',
+  },
+  stillWalking: {
+    title: "Still Walking",
+    lines: [
+      "He walked the whole road\nand found his own front door.",
+      "He stood there for a long time.",
+      "Then he walked again.",
+    ],
+    palette: { sky1: '#606070', sky2: '#303040', ground: '#0a0a0a', mid: '#181818' },
+    icon: 'loop',
+  },
+};
+let currentEnding = null;
+let endingPhase   = 0; // 0=line1, 1=line2, 2=line3, 3=done
+let endingLineAlpha = 0;
+let endingLineDir   = 1; // 1=fade in, -1=fade out
+let endingTimer     = 0;
+
+// --- Proximity prompt ---
+let promptAlpha   = 0;
+let activeVignette = null; // vignette player is near
+
+// --- Camera sway ---
+let swayY = 0;
+let swayT = 0;
+
+// --- Input ---
+const keys = {};
+document.addEventListener('keydown', e => {
+  keys[e.code] = true;
+  if (gameState === 'title' && e.code === 'Enter') startGame();
+  if (gameState === 'vignette' && (e.code === 'Space' || e.code === 'Enter')) continueAfterVignette();
+  if (gameState === 'vignette' && (e.code === 'ArrowRight' || e.code === 'KeyD' || e.code === 'ArrowLeft' || e.code === 'KeyA')) walkPastVignette();
+  if (gameState === 'ending' && e.code === 'Enter') advanceEnding();
+  // Prevent page scroll on space/arrow
+  if (['Space','ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.code)) e.preventDefault();
+});
+document.addEventListener('keyup', e => { keys[e.code] = false; });
+
+// ----------------------------------------------------------------
+// HELPERS
+// ----------------------------------------------------------------
+
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+function worldToScreen(wx) {
+  return wx - worldOffset;
+}
+
+// ----------------------------------------------------------------
+// START / RESTART
+// ----------------------------------------------------------------
+
+function startGame() {
+  gameState       = 'walking';
+  worldOffset     = 0;
+  selfScore       = 0;
+  presentScore    = 0;
+  memoriesEngaged = 0;
+  memoriesPassed  = 0;
+  PLAYER.x        = 80;
+  PLAYER.walkFrame = 0;
+  PLAYER.walkTimer  = 0;
+  PLAYER.facing   = 1;
+  PLAYER.moving   = false;
+  activeNarrative = null;
+  narrativeFired  = new Set();
+  activeVignette  = null;
+  promptAlpha     = 0;
+  currentEnding   = null;
+  endingPhase     = 0;
+  endingLineAlpha = 0;
+  endingTimer     = 0;
+  swayT           = 0;
+  VIGNETTES.forEach(v => { v.engaged = false; v.passed = false; });
+  updateHUD();
+}
+
+function updateHUD() {
+  selfDisplay.textContent    = selfScore > 0    ? '●'.repeat(selfScore)    : '—';
+  presentDisplay.textContent = presentScore > 0 ? '●'.repeat(presentScore) : '—';
+  memoriesDisplay.textContent = `${memoriesEngaged + memoriesPassed} / 5`;
+}
+
+// ----------------------------------------------------------------
+// VIGNETTE INTERACTION
+// ----------------------------------------------------------------
+
+function triggerVignette(v) {
+  gameState      = 'vignette';
+  activeVignette = v;
+  PLAYER.moving  = false;
+  keys['ArrowRight'] = false;
+  keys['KeyD']       = false;
+}
+
+function continueAfterVignette() {
+  if (!activeVignette) return;
+  const v = activeVignette;
+  // Engage = player chose to stop and press Space/Enter
+  v.engaged = true;
+  if (v.axis === 'self')    selfScore    = Math.min(3, selfScore + 1);
+  if (v.axis === 'present') presentScore = Math.min(3, presentScore + 1);
+  memoriesEngaged++;
+  updateHUD();
+  activeVignette = null;
+  gameState = 'walking';
+}
+
+function walkPastVignette() {
+  if (!activeVignette) return;
+  markPassed(activeVignette);
+  activeVignette = null;
+  gameState = 'walking';
+}
+
+function markPassed(v) {
+  if (!v.passed && !v.engaged) {
+    v.passed = true;
+    memoriesPassed++;
+    updateHUD();
+  }
+}
+
+// ----------------------------------------------------------------
+// ENDINGS
+// ----------------------------------------------------------------
+
+function triggerEnding() {
+  gameState = 'ending';
+
+  // Determine ending
+  const selfHigh    = selfScore >= 2;
+  const presentHigh = presentScore >= 1;
+
+  if (selfHigh && presentHigh)        currentEnding = ENDINGS.stillBecoming;
+  else if (selfHigh && !presentHigh)  currentEnding = ENDINGS.longWayRound;
+  else if (!selfHigh && presentHigh)  currentEnding = ENDINGS.ghostFather;
+  else                                currentEnding = ENDINGS.stillWalking;
+
+  endingPhase     = 0;
+  endingLineAlpha = 0;
+  endingLineDir   = 1;
+  endingTimer     = 0;
+}
+
+function advanceEnding() {
+  if (endingPhase < currentEnding.lines.length - 1) {
+    endingPhase++;
+    endingLineAlpha = 0;
+    endingLineDir   = 1;
+    endingTimer     = 0;
+  } else {
+    // Restart
+    gameState = 'title';
+  }
+}
+
+// ----------------------------------------------------------------
+// NARRATIVE TEXT
+// ----------------------------------------------------------------
+
+function checkNarrative(worldX) {
+  for (const line of narrativeLines) {
+    if (!narrativeFired.has(line.worldX) && worldX > line.worldX) {
+      narrativeFired.add(line.worldX);
+      showNarrative(line.text);
+      break;
+    }
+  }
+}
+
+function showNarrative(text) {
+  activeNarrative = { text, alpha: 0, phase: 'fadein', timer: 0 };
+}
+
+// ----------------------------------------------------------------
+// UPDATE
+// ----------------------------------------------------------------
+
+function update(dt) {
+  if (gameState !== 'walking') return;
+
+  // --- Camera sway ---
+  swayT += dt * 0.001;
+  swayY = Math.sin(swayT) * 1.8;
+
+  // --- Player movement ---
+  const movingRight = keys['ArrowRight'] || keys['KeyD'];
+  const movingLeft  = keys['ArrowLeft']  || keys['KeyA'];
+
+  // Don't move if at an active nearby vignette (player paused to engage)
+  const nearVignette = VIGNETTES.find(v =>
+    !v.engaged && !v.passed &&
+    Math.abs(worldToScreen(v.worldX) - PLAYER.screenX) < ENGAGE_DIST
+  );
+
+  // Movement constraints
+  const atLeftEdge  = worldOffset <= 0 && movingLeft;
+  const atRightEdge = worldOffset >= WORLD_WIDTH - W;
+
+  if (movingRight && !atRightEdge && gameState === 'walking') {
+    PLAYER.facing = 1;
+    PLAYER.moving = true;
+    const speed = PLAYER.walkSpeed;
+    worldOffset = Math.min(WORLD_WIDTH - W, worldOffset + speed * dt * 0.06);
+    PLAYER.x    = worldOffset + PLAYER.screenX;
+  } else if (movingLeft && !atLeftEdge) {
+    PLAYER.facing = -1;
+    PLAYER.moving = true;
+    worldOffset = Math.max(0, worldOffset - PLAYER.walkSpeed * dt * 0.06);
+    PLAYER.x    = worldOffset + PLAYER.screenX;
+  } else {
+    PLAYER.moving = false;
+  }
+
+  // Walk animation
+  if (PLAYER.moving) {
+    PLAYER.walkTimer += dt;
+    if (PLAYER.walkTimer > 280) {
+      PLAYER.walkTimer = 0;
+      PLAYER.walkFrame = (PLAYER.walkFrame + 1) % 2;
+    }
+  } else {
+    PLAYER.walkFrame = 0;
+  }
+
+  // --- Vignette proximity check ---
+  activeVignette = null;
+  promptAlpha    = lerp(promptAlpha, 0, 0.08);
+
+  for (const v of VIGNETTES) {
+    if (v.engaged || v.passed) continue;
+    const sx   = worldToScreen(v.worldX);
+    const dist = Math.abs(sx - PLAYER.screenX);
+
+    if (dist < ENGAGE_DIST) {
+      activeVignette = v;
+      promptAlpha    = lerp(promptAlpha, 1, 0.06);
+
+      // If player presses Space while standing still near a vignette
+      if (keys['Space'] && !PLAYER.moving) {
+        keys['Space'] = false; // consume
+        triggerVignette(v);
+        return;
+      }
+    } else if (PLAYER.moving && PLAYER.facing === 1 && sx < PLAYER.screenX - 20) {
+      markPassed(v);
+    }
+  }
+
+  // --- Narrative check ---
+  checkNarrative(worldOffset + PLAYER.screenX);
+
+  // --- Narrative animation ---
+  if (activeNarrative) {
+    activeNarrative.timer += dt;
+    if (activeNarrative.phase === 'fadein') {
+      activeNarrative.alpha = Math.min(1, activeNarrative.alpha + dt * 0.0015);
+      if (activeNarrative.alpha >= 1) activeNarrative.phase = 'hold';
+    } else if (activeNarrative.phase === 'hold') {
+      if (activeNarrative.timer > 3200) activeNarrative.phase = 'fadeout';
+    } else if (activeNarrative.phase === 'fadeout') {
+      activeNarrative.alpha = Math.max(0, activeNarrative.alpha - dt * 0.001);
+      if (activeNarrative.alpha <= 0) activeNarrative = null;
+    }
+  }
+
+  // --- End trigger: all vignettes resolved OR player reaches the world's end ---
+  const allResolved = VIGNETTES.every(v => v.engaged || v.passed);
+  if (worldOffset >= WORLD_WIDTH - W - 20 || allResolved) {
+    triggerEnding();
+  }
+}
+
+// ----------------------------------------------------------------
+// DRAWING HELPERS
+// ----------------------------------------------------------------
+
+function drawScanlines() {
+  ctx.save();
+  for (let y = 0; y < H; y += 4) {
+    ctx.fillStyle = 'rgba(0,0,0,0.06)';
+    ctx.fillRect(0, y, W, 1);
+  }
+  ctx.restore();
+}
+
+function skyColor(t) {
+  // t: 0-1 progress through the world
+  // Returns gradient stops based on scores
+  const selfRatio    = selfScore / 3;
+  const presentRatio = presentScore / 3;
+  const warmth       = (selfRatio + presentRatio) / 2;
+
+  // Night blue-grey → warm amber
+  const sky1r = Math.round(lerp(  8,  30, t * 0.6 + warmth * 0.4));
+  const sky1g = Math.round(lerp( 10,  18, t * 0.5 + warmth * 0.2));
+  const sky1b = Math.round(lerp( 28,  14, t * 0.5));
+  const sky2r = Math.round(lerp( 18,  80, warmth));
+  const sky2g = Math.round(lerp( 14,  48, warmth));
+  const sky2b = Math.round(lerp( 45,  20, warmth));
+  return {
+    top:    `rgb(${sky1r},${sky1g},${sky1b})`,
+    bottom: `rgb(${sky2r},${sky2g},${sky2b})`,
+  };
+}
+
+// Draw parallax star field (only when sky is dark)
+function drawStars(offset) {
+  const starSeed = [
+    [45,  60],  [110, 35], [200, 80], [280, 25], [360, 55],
+    [430, 40],  [510, 70], [570, 30], [80,  15], [320, 90],
+    [150, 110], [490, 20], [230, 45], [395, 85], [55,  100],
+  ];
+  const warmth = (selfScore + presentScore) / 6;
+  const starAlpha = Math.max(0, 1 - warmth * 1.8);
+  if (starAlpha <= 0) return;
+  ctx.save();
+  ctx.fillStyle = `rgba(255,255,240,${starAlpha * 0.7})`;
+  for (const [bx, by] of starSeed) {
+    const sx = ((bx - offset * LAYER_FAR * 0.1) % W + W) % W;
+    ctx.beginPath();
+    ctx.arc(sx, by, 0.8, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+// Far layer: distant hillline
+function drawFarHills(offset) {
+  const x = -((offset * LAYER_FAR) % W);
+  ctx.save();
+  ctx.fillStyle = 'rgba(20,18,30,0.85)';
+  for (let rep = -1; rep <= 2; rep++) {
+    const ox = x + rep * W;
+    ctx.beginPath();
+    ctx.moveTo(ox, GROUND_Y - 80);
+    ctx.bezierCurveTo(ox + 80, GROUND_Y - 160, ox + 180, GROUND_Y - 190, ox + 300, GROUND_Y - 130);
+    ctx.bezierCurveTo(ox + 400, GROUND_Y - 80, ox + 500, GROUND_Y - 150, ox + 600, GROUND_Y - 100);
+    ctx.lineTo(ox + 600, H);
+    ctx.lineTo(ox, H);
+    ctx.closePath();
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+// Mid layer: silhouette treeline
+function drawMidTrees(offset) {
+  const x = -((offset * LAYER_MID) % W);
+  ctx.save();
+  ctx.fillStyle = 'rgba(12,10,18,0.9)';
+  // Draw a set of trees that repeat
+  const treeDefs = [
+    [30,  GROUND_Y - 60,  18, 60],
+    [90,  GROUND_Y - 80,  14, 80],
+    [155, GROUND_Y - 50,  20, 50],
+    [220, GROUND_Y - 100, 16, 100],
+    [300, GROUND_Y - 65,  18, 65],
+    [370, GROUND_Y - 90,  15, 90],
+    [440, GROUND_Y - 55,  22, 55],
+    [510, GROUND_Y - 75,  14, 75],
+    [560, GROUND_Y - 45,  18, 45],
+  ];
+  for (let rep = -1; rep <= 2; rep++) {
+    const ox = x + rep * W;
+    for (const [tx, ty, tw, th] of treeDefs) {
+      // Trunk
+      ctx.fillRect(ox + tx - 3, ty + th * 0.6, 6, th * 0.4);
+      // Canopy: triangle
+      ctx.beginPath();
+      ctx.moveTo(ox + tx, ty);
+      ctx.lineTo(ox + tx - tw, ty + th * 0.65);
+      ctx.lineTo(ox + tx + tw, ty + th * 0.65);
+      ctx.closePath();
+      ctx.fill();
+    }
+  }
+  ctx.restore();
+}
+
+// Ground plane
+function drawGround(offset) {
+  ctx.save();
+  // Main ground
+  ctx.fillStyle = '#0e0c18';
+  ctx.fillRect(0, GROUND_Y, W, H - GROUND_Y);
+
+  // Subtle ground texture — grass tufts
+  ctx.fillStyle = 'rgba(30,28,50,0.8)';
+  const tufts = [20, 80, 145, 210, 275, 340, 405, 470, 535];
+  for (const bx of tufts) {
+    const sx = ((bx - offset * LAYER_NEAR * 0.3) % W + W) % W;
+    ctx.fillRect(sx,     GROUND_Y,     3, 6);
+    ctx.fillRect(sx + 6, GROUND_Y - 2, 2, 4);
+    ctx.fillRect(sx - 4, GROUND_Y + 1, 2, 3);
+  }
+
+  // Ground line
+  ctx.fillStyle = 'rgba(80,70,100,0.4)';
+  ctx.fillRect(0, GROUND_Y, W, 1);
+  ctx.restore();
+}
+
+// Vignette drawings — geometric silhouettes
+function drawVignette(v, sx) {
+  const gx = sx;
+  const gy = GROUND_Y;
+  ctx.save();
+
+  // Glow ring when player is near and not yet engaged
+  if (!v.engaged && !v.passed) {
+    const dist    = Math.abs(sx - PLAYER.screenX);
+    const glowAlpha = Math.max(0, 1 - dist / ENGAGE_DIST) * 0.18;
+    if (glowAlpha > 0) {
+      const grad = ctx.createRadialGradient(gx, gy - 50, 10, gx, gy - 50, 80);
+      grad.addColorStop(0, `rgba(255,220,150,${glowAlpha})`);
+      grad.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(gx - 80, gy - 130, 160, 130);
+    }
+  }
+
+  // Dim out engaged vignettes
+  if (v.engaged) ctx.globalAlpha = 0.25;
+  if (v.passed)  ctx.globalAlpha = 0.12;
+
+  switch (v.id) {
+    case 0: drawGuitar(gx, gy);      break;
+    case 1: drawBookshelf(gx, gy);   break;
+    case 2: drawShoes(gx, gy);       break;
+    case 3: drawPubDoor(gx, gy);     break;
+    case 4: drawBedroomDoor(gx, gy); break;
+  }
+
+  ctx.restore();
+}
+
+function drawGuitar(x, y) {
+  ctx.fillStyle = '#2a2040';
+  // Neck
+  ctx.fillRect(x - 2, y - 110, 4, 75);
+  // Body lower bout
+  ctx.beginPath();
+  ctx.ellipse(x, y - 42, 16, 20, 0, 0, Math.PI * 2);
+  ctx.fill();
+  // Body upper bout
+  ctx.beginPath();
+  ctx.ellipse(x, y - 68, 12, 15, 0, 0, Math.PI * 2);
+  ctx.fill();
+  // Waist cutout (lighten slightly)
+  ctx.fillStyle = '#1a1030';
+  ctx.fillRect(x - 12, y - 62, 24, 8);
+  ctx.fillStyle = '#2a2040';
+  // Sound hole
+  ctx.beginPath();
+  ctx.arc(x, y - 48, 5, 0, Math.PI * 2);
+  ctx.fillStyle = '#0a0818';
+  ctx.fill();
+  // Tuning pegs
+  ctx.fillStyle = '#2a2040';
+  for (let i = 0; i < 3; i++) {
+    ctx.fillRect(x - 8 + i * 7, y - 116, 3, 5);
+  }
+  // Lean: shadow on ground
+  ctx.fillStyle = 'rgba(0,0,0,0.15)';
+  ctx.beginPath();
+  ctx.ellipse(x, y, 18, 4, 0, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function drawBookshelf(x, y) {
+  ctx.fillStyle = '#1e1830';
+  // Shelf back panel
+  ctx.fillRect(x - 28, y - 90, 56, 90);
+  // Shelf planks
+  ctx.fillStyle = '#100e20';
+  ctx.fillRect(x - 28, y - 90, 56, 4);
+  ctx.fillRect(x - 28, y - 55, 56, 4);
+  ctx.fillRect(x - 28, y - 20, 56, 4);
+  // Books — lower shelf
+  const lowerBooks = [
+    { w: 8,  h: 28, c: '#2a1840' },
+    { w: 6,  h: 24, c: '#1a2a40' },
+    { w: 10, h: 30, c: '#301828' },
+    { w: 7,  h: 26, c: '#182838' },
+    { w: 5,  h: 22, c: '#28201e' },
+  ];
+  let bx = x - 25;
+  for (const b of lowerBooks) {
+    ctx.fillStyle = b.c;
+    ctx.fillRect(bx, y - 20 - b.h, b.w, b.h);
+    bx += b.w + 1;
+  }
+  // Books — upper shelf
+  const upperBooks = [
+    { w: 9, h: 24, c: '#1c2840' },
+    { w: 6, h: 20, c: '#301a30' },
+    { w: 8, h: 26, c: '#202040' },
+    { w: 7, h: 18, c: '#181a30' },
+  ];
+  bx = x - 22;
+  for (const b of upperBooks) {
+    ctx.fillStyle = b.c;
+    ctx.fillRect(bx, y - 55 - b.h, b.w, b.h);
+    bx += b.w + 2;
+  }
+}
+
+function drawShoes(x, y) {
+  ctx.fillStyle = '#1e1830';
+  // Left shoe
+  ctx.beginPath();
+  ctx.moveTo(x - 20, y - 8);
+  ctx.bezierCurveTo(x - 20, y - 20, x - 4, y - 22, x, y - 18);
+  ctx.bezierCurveTo(x + 4,  y - 14, x + 12, y - 12, x + 14, y - 8);
+  ctx.lineTo(x - 20, y - 8);
+  ctx.closePath();
+  ctx.fill();
+  // Right shoe
+  ctx.beginPath();
+  ctx.moveTo(x + 4,  y - 8);
+  ctx.bezierCurveTo(x + 4,  y - 20, x + 20, y - 22, x + 24, y - 18);
+  ctx.bezierCurveTo(x + 28, y - 14, x + 32, y - 12, x + 34, y - 8);
+  ctx.lineTo(x + 4,  y - 8);
+  ctx.closePath();
+  ctx.fill();
+  // Laces (light lines)
+  ctx.strokeStyle = 'rgba(100,90,130,0.6)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i < 3; i++) {
+    ctx.beginPath();
+    ctx.moveTo(x - 14 + i * 4, y - 18);
+    ctx.lineTo(x - 10 + i * 4, y - 10);
+    ctx.stroke();
+  }
+  // Shadow
+  ctx.fillStyle = 'rgba(0,0,0,0.15)';
+  ctx.beginPath();
+  ctx.ellipse(x + 8, y, 30, 4, 0, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function drawPubDoor(x, y) {
+  ctx.fillStyle = '#1a1628';
+  // Wall surround
+  ctx.fillRect(x - 35, y - 120, 70, 120);
+  // Door frame
+  ctx.fillStyle = '#0e0c18';
+  ctx.fillRect(x - 22, y - 105, 44, 105);
+  // Door
+  ctx.fillStyle = '#1e1830';
+  ctx.fillRect(x - 20, y - 102, 40, 102);
+  // Frosted window panes (warm light bleeding through)
+  ctx.fillStyle = 'rgba(200,150,60,0.12)';
+  ctx.fillRect(x - 16, y - 90, 14, 18);
+  ctx.fillRect(x + 2,  y - 90, 14, 18);
+  ctx.fillRect(x - 16, y - 68, 14, 18);
+  ctx.fillRect(x + 2,  y - 68, 14, 18);
+  // Door handle
+  ctx.fillStyle = '#3a3050';
+  ctx.beginPath();
+  ctx.arc(x + 14, y - 48, 3, 0, Math.PI * 2);
+  ctx.fill();
+  // Arch above door
+  ctx.fillStyle = '#1a1628';
+  ctx.beginPath();
+  ctx.arc(x, y - 102, 22, Math.PI, 0, false);
+  ctx.fill();
+  // Warm glow emanating from door crack (left edge)
+  const grad = ctx.createLinearGradient(x - 22, 0, x - 14, 0);
+  grad.addColorStop(0, 'rgba(200,140,50,0.18)');
+  grad.addColorStop(1, 'rgba(200,140,50,0)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(x - 22, y - 102, 10, 102);
+}
+
+function drawBedroomDoor(x, y) {
+  ctx.fillStyle = '#18141e';
+  // Wall
+  ctx.fillRect(x - 35, y - 130, 70, 130);
+  // Door frame
+  ctx.fillStyle = '#0c0a14';
+  ctx.fillRect(x - 22, y - 115, 44, 115);
+  // Door — slightly ajar (offset by 6px revealing light)
+  ctx.fillStyle = '#1c1828';
+  ctx.fillRect(x - 18, y - 112, 36, 112);
+  // Gap of light at the left edge of the door
+  const bedroomGlow = ctx.createLinearGradient(x - 22, 0, x - 10, 0);
+  bedroomGlow.addColorStop(0, 'rgba(255,200,100,0.35)');
+  bedroomGlow.addColorStop(1, 'rgba(255,200,100,0)');
+  ctx.fillStyle = bedroomGlow;
+  ctx.fillRect(x - 22, y - 112, 14, 112);
+  // Soft floor glow spill
+  const floorGlow = ctx.createRadialGradient(x - 22, y, 2, x - 22, y, 40);
+  floorGlow.addColorStop(0, 'rgba(255,200,100,0.25)');
+  floorGlow.addColorStop(1, 'rgba(255,200,100,0)');
+  ctx.fillStyle = floorGlow;
+  ctx.beginPath();
+  ctx.ellipse(x - 10, y, 38, 10, 0, 0, Math.PI * 2);
+  ctx.fill();
+  // Door handle
+  ctx.fillStyle = '#3a3050';
+  ctx.beginPath();
+  ctx.arc(x + 10, y - 50, 3, 0, Math.PI * 2);
+  ctx.fill();
+  // Small toy/drawing on floor suggesting a child
+  ctx.fillStyle = 'rgba(80,70,100,0.5)';
+  ctx.fillRect(x + 8, y - 6, 10, 6);
+  ctx.fillRect(x + 11, y - 9, 4, 3);
+}
+
+// --- Player silhouette ---
+function drawPlayer() {
+  const sx = PLAYER.screenX;
+  const sy = GROUND_Y + swayY;
+  const f  = PLAYER.facing;
+  const wf = PLAYER.walkFrame;
+  const moving = PLAYER.moving;
+
+  ctx.save();
+  ctx.translate(sx, sy);
+  if (f === -1) ctx.scale(-1, 1);
+
+  ctx.fillStyle = '#0e0c18';
+
+  // Shadow
+  ctx.save();
+  ctx.fillStyle = 'rgba(0,0,0,0.2)';
+  ctx.beginPath();
+  ctx.ellipse(0, 0, 16, 3, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  // Legs — walk animation: alternate front/back leg
+  const legSwing = moving ? (wf === 0 ? 6 : -6) : 0;
+  // Back leg
+  ctx.save();
+  ctx.rotate((0 - legSwing * 0.05));
+  ctx.fillRect(-5, -8, 5, 30);   // upper
+  ctx.fillRect(-5, 22, 5, 20);   // lower
+  ctx.restore();
+  // Front leg
+  ctx.save();
+  ctx.rotate(legSwing * 0.05);
+  ctx.fillRect(0,  -8, 5, 30);
+  ctx.fillRect(0,  22, 5, 20 + (moving && wf === 1 ? 3 : 0));
+  ctx.restore();
+
+  // Torso
+  ctx.fillRect(-8, -48, 16, 40);
+
+  // Arm — back arm swings forward when front leg is forward
+  ctx.save();
+  ctx.rotate( (moving ? (wf === 0 ? 0.3 : -0.3) : 0) );
+  ctx.translate(-8, -40);
+  ctx.fillRect(0, 0, 4, 26);
+  ctx.restore();
+  // Arm — front arm
+  ctx.save();
+  ctx.rotate( (moving ? (wf === 0 ? -0.3 : 0.3) : 0) );
+  ctx.translate(4, -40);
+  ctx.fillRect(0, 0, 4, 26);
+  ctx.restore();
+
+  // Head
+  ctx.beginPath();
+  ctx.arc(0, -60, 12, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.restore();
+}
+
+// --- Prompt text (vignette label and press-space cue) ---
+function drawPrompt(v) {
+  if (!v || promptAlpha <= 0.02) return;
+  ctx.save();
+  ctx.globalAlpha = promptAlpha;
+
+  // Position: below vignette, above ground but legible
+  const sx = Math.max(80, Math.min(W - 120, worldToScreen(v.worldX)));
+  const py = GROUND_Y + 28;
+
+  ctx.font = '400 12px "DM Mono", monospace';
+  ctx.textAlign = 'center';
+
+  // Label
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText(v.label, sx, py);
+
+  // Prompt
+  ctx.fillStyle = 'rgba(200,180,130,0.9)';
+  ctx.font = '400 10px "DM Mono", monospace';
+  ctx.fillText(v.prompt, sx, py + 16);
+
+  // Space cue — blink
+  const blink = Math.floor(Date.now() / 500) % 2 === 0;
+  if (blink && !PLAYER.moving) {
+    ctx.fillStyle = 'rgba(255,220,120,0.85)';
+    ctx.font = '500 10px "DM Mono", monospace';
+    ctx.fillText('[ SPACE ] to stop', sx, py + 32);
+  }
+
+  ctx.restore();
+}
+
+// --- Narrative overlay ---
+function drawNarrative() {
+  if (!activeNarrative || activeNarrative.alpha <= 0.01) return;
+  ctx.save();
+  ctx.globalAlpha = activeNarrative.alpha;
+
+  const lines = activeNarrative.text.split('\n');
+  const cy    = 140;
+
+  // Background scrim
+  ctx.fillStyle = 'rgba(0,0,0,0.45)';
+  ctx.fillRect(60, cy - 30, W - 120, lines.length * 28 + 20);
+
+  ctx.textAlign = 'center';
+  lines.forEach((line, i) => {
+    // Shadow
+    ctx.fillStyle = 'rgba(0,0,0,0.6)';
+    ctx.font = 'italic 400 16px "Playfair Display", serif';
+    ctx.fillText(line, W / 2 + 1, cy + i * 28 + 1);
+    // Text
+    ctx.fillStyle = 'rgba(240,225,195,0.95)';
+    ctx.fillText(line, W / 2, cy + i * 28);
+  });
+
+  ctx.restore();
+}
+
+// ----------------------------------------------------------------
+// DRAW — TITLE
+// ----------------------------------------------------------------
+
+function drawTitle() {
+  // Dark sky
+  const grad = ctx.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, '#06050f');
+  grad.addColorStop(1, '#18141e');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  drawScanlines();
+
+  // Stars
+  const starPos = [
+    [55,40],[140,25],[230,60],[310,15],[400,45],[480,30],[550,55],
+    [90,80],[195,35],[340,70],[460,20],[520,65],[30,50],[270,90],
+  ];
+  ctx.fillStyle = 'rgba(255,255,240,0.6)';
+  for (const [sx, sy] of starPos) {
+    ctx.beginPath();
+    ctx.arc(sx, sy, 0.9, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Far silhouette hills
+  ctx.fillStyle = 'rgba(14,12,22,0.9)';
+  ctx.beginPath();
+  ctx.moveTo(0, 280);
+  ctx.bezierCurveTo(100, 200, 220, 240, 350, 210);
+  ctx.bezierCurveTo(430, 185, 520, 230, 600, 260);
+  ctx.lineTo(600, H); ctx.lineTo(0, H);
+  ctx.closePath();
+  ctx.fill();
+
+  // Ground
+  ctx.fillStyle = '#0a0812';
+  ctx.fillRect(0, GROUND_Y - 20, W, H - GROUND_Y + 20);
+
+  // Static player silhouette on title
+  ctx.save();
+  ctx.translate(W / 2, GROUND_Y - 20);
+  ctx.fillStyle = '#0e0c18';
+  ctx.fillRect(-5, -88, 5, 30); // back leg
+  ctx.fillRect(0,  -88, 5, 30); // front leg
+  ctx.fillRect(-5,  -58, 5, 20); // lower back leg
+  ctx.fillRect(0,   -58, 5, 20); // lower front leg
+  ctx.fillRect(-8, -128, 16, 40); // torso
+  ctx.fillRect(-10, -120, 4, 24); // arm back
+  ctx.fillRect(6,  -120, 4, 24); // arm front
+  ctx.beginPath();
+  ctx.arc(0, -140, 12, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  // Title text
+  ctx.textAlign = 'center';
+
+  ctx.fillStyle = 'rgba(200,180,130,0.4)';
+  ctx.font = '400 11px "DM Mono", monospace';
+  ctx.fillText('A PHILOSOPHICAL WALKING SIMULATION', W / 2, 60);
+
+  ctx.fillStyle = 'rgba(240,225,195,0.95)';
+  ctx.font = 'italic 700 42px "Playfair Display", serif';
+  ctx.fillText("Father's Odyssey", W / 2, 118);
+
+  ctx.fillStyle = 'rgba(160,145,115,0.7)';
+  ctx.font = 'italic 400 14px "Playfair Display", serif';
+  ctx.fillText('He walked out the front door.', W / 2, 155);
+  ctx.fillText("He's still not sure where he's going.", W / 2, 175);
+
+  // Instructions
+  ctx.fillStyle = 'rgba(120,110,90,0.6)';
+  ctx.font = '400 10px "DM Mono", monospace';
+  ctx.fillText('← → WALK   ·   SPACE ENGAGE   ·   5 MEMORIES   ·   4 ENDINGS', W / 2, 230);
+
+  // Enter prompt blink
+  const blink = Math.floor(Date.now() / 600) % 2 === 0;
+  ctx.fillStyle = blink ? 'rgba(240,220,160,0.9)' : 'rgba(240,220,160,0.3)';
+  ctx.font = '500 12px "DM Mono", monospace';
+  ctx.fillText('[ ENTER ] TO BEGIN', W / 2, 270);
+}
+
+// ----------------------------------------------------------------
+// DRAW — WALKING
+// ----------------------------------------------------------------
+
+function drawWalking(ts) {
+  // Sky
+  const progress = worldOffset / (WORLD_WIDTH - W);
+  const sky      = skyColor(progress);
+  const grad     = ctx.createLinearGradient(0, 0, 0, GROUND_Y);
+  grad.addColorStop(0, sky.top);
+  grad.addColorStop(1, sky.bottom);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  drawStars(worldOffset);
+  drawFarHills(worldOffset);
+  drawMidTrees(worldOffset);
+  drawGround(worldOffset);
+
+  // Vignettes
+  for (const v of VIGNETTES) {
+    const sx = worldToScreen(v.worldX);
+    if (sx > -100 && sx < W + 100) {
+      drawVignette(v, sx);
+    }
+  }
+
+  // Player
+  drawPlayer();
+
+  // Prompt
+  drawPrompt(activeVignette);
+
+  // Narrative overlay
+  drawNarrative();
+
+  // Progress bar — subtle, bottom edge
+  const pct = worldOffset / (WORLD_WIDTH - W);
+  ctx.fillStyle = 'rgba(255,255,255,0.04)';
+  ctx.fillRect(0, H - 3, W, 3);
+  ctx.fillStyle = 'rgba(200,170,100,0.25)';
+  ctx.fillRect(0, H - 3, W * pct, 3);
+
+  drawScanlines();
+}
+
+// ----------------------------------------------------------------
+// DRAW — VIGNETTE (stop screen)
+// ----------------------------------------------------------------
+
+function drawVignetteScreen(ts) {
+  const v = activeVignette;
+  if (!v) return;
+
+  // Background: darkened version of walking scene
+  drawWalking(ts);
+
+  // Darken overlay
+  ctx.fillStyle = 'rgba(0,0,0,0.6)';
+  ctx.fillRect(0, 0, W, H);
+
+  // Large vignette drawing in centre
+  ctx.save();
+  ctx.translate(W / 2, GROUND_Y - 30);
+  ctx.scale(2.2, 2.2);
+  switch (v.id) {
+    case 0: drawGuitar(0, 0);      break;
+    case 1: drawBookshelf(0, 0);   break;
+    case 2: drawShoes(0, 0);       break;
+    case 3: drawPubDoor(0, 0);     break;
+    case 4: drawBedroomDoor(0, 0); break;
+  }
+  ctx.restore();
+
+  ctx.textAlign = 'center';
+
+  // Memory label
+  ctx.fillStyle = 'rgba(200,170,100,0.6)';
+  ctx.font = '400 10px "DM Mono", monospace';
+  ctx.fillText('MEMORY', W / 2, 80);
+
+  ctx.fillStyle = 'rgba(240,225,195,0.95)';
+  ctx.font = 'italic 700 28px "Playfair Display", serif';
+  ctx.fillText(v.label, W / 2, 110);
+
+  // Prompt sentence
+  ctx.fillStyle = 'rgba(180,165,130,0.85)';
+  ctx.font = 'italic 400 14px "Playfair Display", serif';
+  ctx.fillText(v.prompt, W / 2, 140);
+
+  // The engagement question
+  ctx.fillStyle = 'rgba(160,145,110,0.7)';
+  ctx.font = '400 11px "DM Mono", monospace';
+  ctx.fillText('Do you stop here a while?', W / 2, H - 75);
+
+  const blink = Math.floor(Date.now() / 600) % 2 === 0;
+  ctx.fillStyle = blink ? 'rgba(255,225,140,0.9)' : 'rgba(255,225,140,0.35)';
+  ctx.font = '500 11px "DM Mono", monospace';
+  ctx.fillText('[ SPACE / ENTER ] to stay    [ ← → ] to walk past', W / 2, H - 52);
+
+  drawScanlines();
+}
+
+// ----------------------------------------------------------------
+// DRAW — ENDING
+// ----------------------------------------------------------------
+
+function drawEnding(ts) {
+  if (!currentEnding) return;
+  const e = currentEnding;
+
+  // Palette
+  const grad = ctx.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, e.palette.sky1);
+  grad.addColorStop(1, e.palette.sky2);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // Ground
+  ctx.fillStyle = e.palette.ground;
+  ctx.fillRect(0, GROUND_Y, W, H - GROUND_Y);
+  ctx.fillStyle = e.palette.mid;
+  ctx.fillRect(0, GROUND_Y - 30, W, 30);
+
+  // Icon
+  drawEndingIcon(e.icon, W / 2, GROUND_Y - 10);
+
+  // Scanlines
+  drawScanlines();
+
+  ctx.textAlign = 'center';
+
+  // Ending title
+  ctx.fillStyle = 'rgba(200,170,100,0.5)';
+  ctx.font = '400 10px "DM Mono", monospace';
+  ctx.fillText('ENDING', W / 2, 55);
+
+  ctx.fillStyle = 'rgba(240,220,180,0.95)';
+  ctx.font = 'italic 700 32px "Playfair Display", serif';
+  ctx.fillText(e.title, W / 2, 90);
+
+  // Current line
+  if (endingPhase < e.lines.length) {
+    // Animate endingLineAlpha towards 1
+    endingLineAlpha = Math.min(1, endingLineAlpha + 0.012);
+
+    const lines = e.lines[endingPhase].split('\n');
+    ctx.globalAlpha = endingLineAlpha;
+    lines.forEach((line, i) => {
+      ctx.fillStyle = 'rgba(220,200,160,0.95)';
+      ctx.font = 'italic 400 16px "Playfair Display", serif';
+      ctx.fillText(line, W / 2, 160 + i * 30);
+    });
+    ctx.globalAlpha = 1;
+
+    // Nav hint
+    if (endingLineAlpha > 0.7) {
+      const blink = Math.floor(Date.now() / 700) % 2 === 0;
+      ctx.fillStyle = blink ? 'rgba(200,180,120,0.7)' : 'rgba(200,180,120,0.2)';
+      ctx.font = '400 10px "DM Mono", monospace';
+      const isLast = endingPhase === e.lines.length - 1;
+      ctx.fillText(isLast ? '[ ENTER ] to walk again' : '[ ENTER ] continue', W / 2, H - 45);
+    }
+  }
+}
+
+function drawEndingIcon(icon, x, y) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.fillStyle = 'rgba(20,15,30,0.8)';
+
+  switch (icon) {
+    case 'sunrise': {
+      // Sun peeking over horizon
+      ctx.fillStyle = 'rgba(200,130,40,0.4)';
+      ctx.beginPath();
+      ctx.arc(0, 10, 40, Math.PI, 0, false);
+      ctx.fill();
+      ctx.fillStyle = 'rgba(220,160,60,0.6)';
+      ctx.beginPath();
+      ctx.arc(0, 10, 28, Math.PI, 0, false);
+      ctx.fill();
+      // Figure walking forward — slightly ahead of centre
+      ctx.fillStyle = '#0e0c18';
+      ctx.translate(30, 0);
+      drawMiniSil();
+      break;
+    }
+    case 'alone': {
+      // Figure standing, looking right — alone
+      ctx.fillStyle = '#0e0c18';
+      ctx.translate(0, 0);
+      drawMiniSil();
+      break;
+    }
+    case 'door': {
+      // Large door — figure standing in front
+      ctx.fillStyle = '#1e1828';
+      ctx.fillRect(-20, -120, 40, 120);
+      const dg = ctx.createLinearGradient(-24, 0, -10, 0);
+      dg.addColorStop(0, 'rgba(255,200,80,0.35)');
+      dg.addColorStop(1, 'rgba(255,200,80,0)');
+      ctx.fillStyle = dg;
+      ctx.fillRect(-24, -120, 16, 120);
+      ctx.fillStyle = '#0e0c18';
+      ctx.translate(-35, 0);
+      drawMiniSil();
+      break;
+    }
+    case 'loop': {
+      // Circular dashed path — figure at start
+      ctx.strokeStyle = 'rgba(80,70,100,0.5)';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([6, 8]);
+      ctx.beginPath();
+      ctx.arc(0, -50, 50, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#0e0c18';
+      ctx.translate(50, -50);
+      drawMiniSil();
+      break;
+    }
+  }
+  ctx.restore();
+}
+
+// Tiny standin silhouette for ending icons
+function drawMiniSil() {
+  ctx.fillRect(-4, -68, 8, 32);  // torso
+  ctx.fillRect(-4, -36, 4, 24);  // leg l
+  ctx.fillRect(0,  -36, 4, 24);  // leg r
+  ctx.fillRect(-6, -62, 3, 18);  // arm l
+  ctx.fillRect(3,  -62, 3, 18);  // arm r
+  ctx.beginPath();
+  ctx.arc(0, -78, 10, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+// ----------------------------------------------------------------
+// MAIN LOOP
+// ----------------------------------------------------------------
+
+function draw(ts) {
+  ctx.clearRect(0, 0, W, H);
+  switch (gameState) {
+    case 'title':    drawTitle();           break;
+    case 'walking':  drawWalking(ts);       break;
+    case 'vignette': drawVignetteScreen(ts);break;
+    case 'ending':   drawEnding(ts);        break;
+  }
+}
+
+function loop(ts) {
+  const dt = Math.min(ts - lastTime, 50);
+  lastTime = ts;
+  update(dt);
+  draw(ts);
+  requestAnimationFrame(loop);
+}
+
+// Kick off
+requestAnimationFrame(ts => {
+  lastTime = ts;
+  requestAnimationFrame(loop);
+});
+</script>
+
+</body>
+</html>
